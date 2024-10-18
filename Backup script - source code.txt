@@ -1,0 +1,45 @@
+v1.0.0:
+@echo off
+REM Disable command echoing
+
+set "source=%USERPROFILE%\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe"
+REM Set the path to the Minecraft files directory
+
+set "destination=%~dp0"
+REM Set the destination path to the current directory where the script is located
+
+REM Copy all files and subdirectories from the source directory to the destination directory
+xcopy "%source%" "%destination%Microsoft.MinecraftUWP_8wekyb3d8bbwe" /e /i /y
+REM Check if 7z.exe exists in the current directory
+if exist "%~dp0\7z.exe" (
+    "%~dp0\7z.exe" a "%destination%Microsoft.MinecraftUWP_8wekyb3d8bbwe.7z" "%destination%Microsoft.MinecraftUWP_8wekyb3d8bbwe\*"
+REM Packing copied folder into .7z
+)
+
+v.1.1.0:
+@echo off
+REM Disable command echoing
+setlocal enabledelayedexpansion
+REM Enable delayed variable expansion
+
+REM Get current date and time from the system
+for /f "tokens=2 delims==" %%i in ('wmic os get localdatetime /value') do set datetime=%%i
+set "year=!datetime:~0,4!"
+set "month=!datetime:~4,2!"
+set "day=!datetime:~6,2!"
+
+REM Format the current date
+set "currentDate=!day!, !month!, !year!"
+
+REM Define source and destination paths
+set "source=%USERPROFILE%\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe"
+set "destination=%~dp0"
+set "folderName=Microsoft.MinecraftUWP_8wekyb3d8bbwe - !currentDate!"
+
+REM Copy the folder to the destination
+xcopy "%source%" "%destination%!folderName!" /e /i /y
+
+REM Check if 7z.exe exists and archive the copied folder
+if exist "%~dp0\7z.exe" (
+    "%~dp0\7z.exe" a "%destination%!folderName!.7z" "%destination%!folderName!\*"
+)
