@@ -1,3 +1,4 @@
+Source code for MCBE Release:
 v1.0.0:
 @echo off
 REM Disable command echoing
@@ -66,6 +67,38 @@ REM Define source and destination paths
 set "source=%USERPROFILE%\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe"  REM Path to the source folder
 set "destination=%~dp0"   REM Path to the destination folder (current script directory)
 set "folderName=Microsoft.MinecraftUWP_8wekyb3d8bbwe - !currentDate!"  REM Folder name with date and time
+
+REM Copy folder to the destination
+xcopy "%source%" "%destination%!folderName!" /e /i /y
+
+REM Check for 7z.exe and archive the copied folder
+if exist "%~dp0\7z.exe" (
+    "%~dp0\7z.exe" a "%destination%!folderName!.7z" "%destination%!folderName!\*"
+)
+
+Source code for MCBE Preview:
+v1.2.0:
+@echo off
+REM Disable command echoing
+setlocal enabledelayedexpansion
+REM Enable delayed variable expansion
+
+REM Get current date and time from the system
+for /f "tokens=2 delims==" %%i in ('wmic os get localdatetime /value') do set datetime=%%i
+set "year=!datetime:~0,4!"    REM Get the year
+set "month=!datetime:~4,2!"   REM Get the month
+set "day=!datetime:~6,2!"     REM Get the day
+set "hour=!datetime:~8,2!"    REM Get the hour
+set "minute=!datetime:~10,2!"  REM Get the minutes
+set "second=!datetime:~12,2!"  REM Get the seconds
+
+REM Format the current date and time
+set "currentDate=!day!-!month!-!year!_!hour!-!minute!-!second!"
+
+REM Define source and destination paths
+set "source=%USERPROFILE%\AppData\Local\Packages\Microsoft.MinecraftWindowsBeta_8wekyb3d8bbwe"  REM Path to the source folder
+set "destination=%~dp0"   REM Path to the destination folder (current script directory)
+set "folderName=Microsoft.MinecraftWindowsBeta_8wekyb3d8bbwe_!currentDate!"  REM Folder name with date and time
 
 REM Copy folder to the destination
 xcopy "%source%" "%destination%!folderName!" /e /i /y
